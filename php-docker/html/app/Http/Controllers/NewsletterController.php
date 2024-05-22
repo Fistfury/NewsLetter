@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Newsletter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+
+
 
 class NewsletterController extends Controller
 {
@@ -15,12 +17,14 @@ class NewsletterController extends Controller
 
     public function manage()
     {
-        Log::info("Entered the manage method");
         $newsletters = auth()->user()->newsletters()->with('subscribers')->get();
         return view('newsletters.manage', compact('newsletters'));
     }
 
     public function create() {
+        if (!auth()->user()->isCustomer()) {
+            return redirect('/')->with('error', 'Access denied. You do not have customer permissions.');
+        }
         return view('newsletters.create');
     }
 
@@ -57,10 +61,20 @@ class NewsletterController extends Controller
     
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string'
+            'description' => 'required|string',
+            'image' => 'nullable|image|max:1024'
         ]);
     
-        $newsletter->update($validated);
+        $formFields = $request->only(['name', 'description']);
+
+    if ($request->hasFile('image')) {
+        if ($newsletter->image) {
+            Storage::delete('public/' . $newsletter->image);
+        }
+        $formFields['image'] = $request->file('image')->store('newsletter_images', 'public');
+    }
+
+    $newsletter->update($formFields);
         return redirect('/newsletters/manage')->with('message', 'Newsletter updated successfully!');
     }
 

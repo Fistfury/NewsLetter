@@ -30,24 +30,32 @@
         </a>
         <ul class="flex items-center space-x-6 mr-6 text-lg">
             @auth
-            <li class="flex items-center space-x-4">
-                <span class="font-bold uppercase">Welcome {{ auth()->user()->first_name }}</span>
-                <a href="{{ route('newsletters.manage') }}" class="hover:bg-gray-700 rounded-md px-3 py-2">
-                    <i class="fa-solid fa-gear"></i> Manage Newsletters
-                </a>
-                
-                <form class="inline" method="POST" action="/logout">
-                    @csrf
-                    <button type="submit" class="hover:bg-gray-700 rounded-md px-3 py-2">
-                        <i class="fa-solid fa-door-closed"></i> Logout
-                    </button>
-                </form>
-            </li>
+                <li class="flex items-center space-x-4">
+                    <span class="font-bold uppercase">Welcome {{ auth()->user()->first_name }}</span>
+                    <!-- Show My Subscriptions if user is a subscriber -->
+                    @if(auth()->user()->isSubscriber())
+                        <a href="{{ route('subscriptions.manage') }}" class="hover:bg-gray-700 rounded-md px-3 py-2">
+                            <i class="fa-solid fa-list"></i> My Subscriptions
+                        </a>
+                    @endif
+                    <!-- Show Manage Newsletters if user is a customer -->
+                    @if(auth()->user()->isCustomer())
+                        <a href="{{ route('newsletters.manage') }}" class="hover:bg-gray-700 rounded-md px-3 py-2">
+                            <i class="fa-solid fa-gear"></i> Manage Newsletters
+                        </a>
+                    @endif
+                    <form class="inline" method="POST" action="/logout">
+                        @csrf
+                        <button type="submit" class="hover:bg-gray-700 rounded-md px-3 py-2">
+                            <i class="fa-solid fa-door-closed"></i> Logout
+                        </button>
+                    </form>
+                </li>
             @else
-            <li>
-                <a href="/register" class="hover:bg-gray-700 rounded-md px-3 py-2"><i class="fa-solid fa-user-plus"></i> Register</a>
-                <a href="/login" class="hover:bg-gray-700 rounded-md px-3 py-2"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
-            </li>
+                <li>
+                    <a href="/register" class="hover:bg-gray-700 rounded-md px-3 py-2"><i class="fa-solid fa-user-plus"></i> Register</a>
+                    <a href="/login" class="hover:bg-gray-700 rounded-md px-3 py-2"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+                </li>
             @endauth
         </ul>
     </nav>
@@ -56,7 +64,13 @@
     </main>
     <footer class="fixed bottom-0 left-0 w-full flex items-center justify-center font-bold bg-newsletter text-white h-24 opacity-90">
         <p class="ml-2">Copyright &copy; {{ date('Y') }}, {{ config('app.name') }}. All rights reserved.</p>
+        @auth
+        <form action="{{ route('logout.all') }}" method="POST">
+            @csrf
+            <button type="submit" class="absolute top-1/3 left-10 bg-black text-white py-2 px-5">Logout from all devices</button>
+        </form>
         <a href="/newsletters/create" class="absolute top-1/3 right-10 bg-black text-white py-2 px-5">Create Newsletter</a>
+        @endauth
     </footer>
 
     <x-flash-message />

@@ -21,7 +21,6 @@ class Kernel extends HttpKernel
     ];
 
     protected $routeMiddleware = [
-        // Route middleware
         'auth' => \App\Http\Middleware\Authenticate::class,
         'ensureiscustomer' => \App\Http\Middleware\EnsureIsCustomer::class,
         'ensureissubscriber' => \App\Http\Middleware\EnsureIsSubscriber::class,

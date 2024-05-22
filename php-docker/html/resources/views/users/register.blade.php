@@ -9,7 +9,6 @@
  
      <form method="POST" action="/users">
          @csrf
-         <!-- Example: Splitting name into first and last names -->
          <div class="mb-6">
              <label for="first_name" class="inline-block text-lg mb-2">First Name</label>
              <input type="text" class="border border-gray-200 rounded p-2 w-full" name="first_name" value="{{ old('first_name') }}" required />
@@ -69,7 +68,7 @@
              <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Sign Up</button>
          </div>
  
-          <!-- GDPR/PUL Agreement Checkbox -->
+          <!-- GDPR Agreement Checkbox -->
           <div class="mb-6">
             <label for="agreement" class="inline-block text-lg mb-2">
                 I agree to personal data handling according to GDPR

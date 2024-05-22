@@ -29,7 +29,6 @@
              @enderror
          </div>
  
-         <!-- Assuming newsletters might include an optional image or related file -->
          <div class="mb-6">
              <label for="image" class="inline-block text-lg mb-2">
                  Upload Image (Optional)
