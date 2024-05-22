@@ -19,8 +19,8 @@ class SubscriptionFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(), // Automatically create a user for each subscription
-            'newsletter_id' => Newsletter::factory(), // Automatically create a newsletter for each subscription
+            'user_id' => User::factory(), 
+            'newsletter_id' => Newsletter::factory(),
             'subscribed_at' => $this->faker->dateTimeThisYear(),
         ];
     }

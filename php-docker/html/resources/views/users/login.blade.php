@@ -38,6 +38,11 @@
          <div class="mb-6">
              <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Log In</button>
          </div>
+
+           <!-- Forgot Password Link -->
+           <div class="mb-6">
+            <a href="{{ route('password.request') }}" class="text-sm text-blue-500 hover:text-blue-700">Forgot your password?</a>
+        </div>
  
          <!-- Register Link -->
          <div class="mt-8">

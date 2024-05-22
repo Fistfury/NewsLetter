@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\MailResetPasswordNotification;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements CanResetPassword
 {
     use HasFactory, Notifiable;
 
@@ -61,15 +62,16 @@ class User extends Authenticatable
     }
 
     public function isCustomer() {
-        return $this->role === 'customer';
+        return $this->role === 'customer' || $this->role === 'both';
     }
     
     public function isSubscriber() {
-        return $this->role === 'subscriber';
+        return $this->role === 'subscriber' || $this->role === 'both';
     }
-    
-    public function isBoth() {
-        return $this->role === 'both';
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new MailResetPasswordNotification($token));
     }
 }
 

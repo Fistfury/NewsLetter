@@ -6,7 +6,7 @@
             @foreach($newsletters as $newsletter)
 
                 <x-newsletter-card :newsletter="$newsletter" />
-                
+             
             @endforeach
         @else
             <p>No newsletters found.</p>

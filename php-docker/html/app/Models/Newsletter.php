@@ -23,10 +23,10 @@ class Newsletter extends Model
         return $this->hasManyThrough(
             User::class,
             Subscription::class,
-            'newsletter_id', // Foreign key on the subscriptions table
-            'id',            // Foreign key on the users table
-            'id',            // Local key on newsletters table
-            'user_id'        // Local key on users table
+            'newsletter_id', 
+            'id',            
+            'id',            
+            'user_id'       
         );
     }
     

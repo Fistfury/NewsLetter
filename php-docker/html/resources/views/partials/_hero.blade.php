@@ -3,7 +3,6 @@
 >
     <div
         class="absolute top-0 left-0 w-full h-full opacity-10 bg-no-repeat bg-center"
-        style="background-image: url('{{ asset('images/newsletter-background.png') }}')"
     ></div>
 
     <div class="z-10">
@@ -13,5 +12,6 @@
         <p class="text-2xl text-gray-200 font-bold my-4">
             Subscribe or Create your own newsletters
         </p>
+        
     </div>
 </section>

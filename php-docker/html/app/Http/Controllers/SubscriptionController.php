@@ -13,5 +13,27 @@ class SubscriptionController extends Controller
         return view('subscriptions.manage', compact('subscriptions'));
     }
 
-    // Add methods for subscribe/unsubscribe if needed
+    public function subscribe(Request $request, $newsletterId)
+    {
+        $subscription = new Subscription([
+            'user_id' => auth()->id(),
+            'newsletter_id' => $newsletterId,
+            'subscribed_at' => now(),
+        ]);
+        $subscription->save();
+    
+        return redirect()->back()->with('message', 'Successfully subscribed!');
+    }
+    
+    public function unsubscribe($subscriptionId)
+    {
+        $subscription = Subscription::where('id', $subscriptionId)
+                                    ->where('user_id', auth()->id())->first();
+        if ($subscription) {
+            $subscription->delete();
+            return redirect()->back()->with('message', 'Successfully unsubscribed!');
+        }
+    
+        return redirect()->back()->with('error', 'Unsubscription failed.');
+    }
 }
