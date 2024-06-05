@@ -36,4 +36,18 @@ class SubscriptionController extends Controller
     
         return redirect()->back()->with('error', 'Unsubscription failed.');
     }
+
+    public function unsubscribeByNewsletter(Request $request, $newsletterId)
+{
+    $subscription = Subscription::where('newsletter_id', $newsletterId)
+                                ->where('user_id', auth()->id())
+                                ->first();
+    if ($subscription) {
+        $subscription->delete();
+        return redirect()->back()->with('message', 'Successfully unsubscribed!');
+    }
+
+    return redirect()->back()->with('error', 'Unsubscription failed.');
+}
+
 }

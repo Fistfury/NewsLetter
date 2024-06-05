@@ -83,6 +83,11 @@ Route::delete('/subscriptions/{subscriptionId}/unsubscribe', [SubscriptionContro
 ->middleware('auth')
 ->name('unsubscribe');
 
+// Unsubscribe by newsletter
+Route::delete('/newsletters/{newsletterId}/unsubscribe', [SubscriptionController::class, 'unsubscribeByNewsletter'])
+->middleware('auth')
+->name('unsubscribe');
+
 // Display the form to request a password reset link
 Route::get('password/reset', [PasswordResetController::class, 'showLinkRequestForm'])
 ->name('password.request');
